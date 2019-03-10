@@ -1,0 +1,75 @@
+
+/* outline numbering from the HTML5 tutorial https://www.w3schools.com/css/css_counters.asp */
+ol.rqlist {
+    counter-reset: listitem;
+    list-style-type: none;
+}
+
+ol.rqlist li.rqitem::before {
+    counter-increment: listitem;
+    font-style: italic;
+    background: yellow;
+    margin-left: -20px;
+    content: counters(listitem,".") " "  
+}
+
+li.rqitem[data-moscow='m'] {
+    background: rgb(220,220,220)
+}
+
+li.rqitem[data-moscow='s'] {
+    background: rgb(200,200,200)
+}
+
+li.rqitem[data-moscow='c'] {
+    background: rgb(180,180,180)
+}
+
+li.rqitem[data-moscow='w'] {
+    background: rgb(100,100,100)
+}
+
+li.rqitem:hover > p {
+    display : block;
+} 
+
+li.rqitem > p {
+    display : none;
+}
+
+ol.rqlist li.rqitem {
+    font-weight: bold;
+}
+
+.rqdata {
+    font-weight: normal;
+    font-style: none;
+    font-family: "Courier New", Courier, monospace
+}
+
+.rqdesc {
+    font-weight: normal;
+    font-style: none;
+}
+
+.rqvali::before {
+    font-weight: normal;
+    font-style: italic;
+    content: "Validation: ";
+}
+.rqvali {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.rqveri::before {
+    font-weight: normal;
+    font-style: italic;
+    content: "Verify by: ";
+}
+.rqveri {
+    font-weight: normal;
+    font-style: italic;
+}
+
+

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Copyright
+    This HTML template file format is copyright E. Brown, Memorial University.
+    License is given for COMP2005 students to use this file for purposes of the course.
+-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>COMP2005 Project Requirements Sheet</title>
+    <link rel="stylesheet" href="requirements.css">
+
+    <link rel="icon" href="favicons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+
+</head>
+<body>
+<h1>Introduction</h1>
+<h2>Project Description</h2>
+<p>The client is the instructor for COMP2005 course at the Computer Science Department,
+    Memorial University of Newfoundland</p>
+<p>The project description presented by the client is as follows:</p>
+<blockquote>
+    The COMP2005 course makes use of a proprietary online quiz application integrated into the
+    Brightspace product and supported by Memorial's CITL unit. However, the COMP2005 instructor
+    would like to develop his own online quiz program, which could later be extended to
+    include software code testing and live classroom quiz features. The initial release of
+    this project may be limited to MCQ questions and online asynchronous (i.e. not live
+    classroom) quiz.
+</blockquote>
+<p>Each project team is a group of up to 5 students registered in COMP2005 for the Winter 2019 semester.</p>
+
+<h2>Methodology</h2>
+<p>Acceptable sources for requirements gathering include:</p>
+<ul>
+    <li>Client interview</li>
+    <li>User group dicussion</li>
+    <li>User stories</li>
+    <li>UML use case analysis</li>
+</ul>
+<p>In their first assignment, each student is tasked with producing an
+    original requirement for this project added to the requirements list in this document.
+    Functional requirements should be validated by a use case.</p>
+
+<h3>Documentation</h3>
+
+<h4>Requirements list HTML tags and conventions</h4>
+<p>HTML tags, attributes, and styles have been defined for the
+    Requirements List section of this document as follows:</p>
+<ul>
+    <li>CSS styling of the requirements list is maintained in the file "requirements.css".
+        To change the list appearance, modify the CSS file.</li>
+    <li>The <code>rqlist</code> CSS class identifies a
+        requirements list <code>&lt;ol class="rqlist"&gt;</code> tag</li>
+    <li>The <code>rqitem</code> CSS class identifies a
+        requirements item using an <code>&lt;li class="rqitem"&gt;</code> tag</li>
+    <li>If the <code>rqitem</code> is a requirements category heading:
+        <ul>
+            <li>It starts with the category title</li>
+            <li>Following the title it contains
+                a <code>&lt;ol class="rqlist"&gt;</code> sub-list.</li>
+        </ul>
+    </li>
+    <li>Otherwise the <code>rqitem</code> is a requirement:
+        <ul>
+            <li>It has a <code>data-moscow</code>
+                attribute identifying its MOSCOW priority class
+                <code>&lt;li class="rqitem" data-moscow=m&gt;</code></li>
+            <li>The item content starts with a short imperative title in
+                present tense and active voice that captures the intent of the requirement.</li>
+            <li>The item contains a fuller description paragraph element following the title.
+                The description may also contain concerns and issues that are
+                unresolved or other commentary. The description is CSS class <code>rqdesc</code>
+                with a <code>&lt;p class=rqdesc&gt;</code> tag</li>
+            <li>A requirement data paragraph element follows the the description.
+                This data includes the requirement author's email id and the date and time the
+                requirement was submitted.
+                This paragraph is classed <code>rqdata</code> with
+                a <code>&lt;p class=rqdata&gt;</code> tag</li>
+            <li>A requirement validation paragraph element follows the requirement data element.
+                This element references the methods and documents used to validate the
+                requirements.
+                Each requirement should refer to at least one use case or one user story; but may
+                have additional sources of validity.
+                Explanation of validity and links to other media files such as use case analyses
+                should be supplied.
+                This paragraph is classed <code>rqvali</code> with
+                a <code>&lt;p class=rqvali&gt;</code> tag</li>
+            <li>A requirement verfication plan paragraph element follows the requirement data
+                element.
+                This element references the methods and documents used to validate the
+                requirements.
+                Links to other media files such as use case analyses are encouraged.
+                This paragraph is classed <code>rqveri</code> with
+                a <code>&lt;p class=rqveri&gt;</code> tag</li>
+        </ul>
+    </li>
+</ul>
+
+<h1>Requirements List</h1>
+<ol class="rqlist">
+    <li class="rqitem">Functional
+        <ol class="rqlist">
+            <li class="rqitem">Users can take a quiz.
+                <ol class="rqlist">
+                    <!--My requirements start-->
+                    <li class="rqitem" data-moscow="m">User's accessibility are checked.
+                        <p class="rqdesc">User's accessibility are check upon limitations of the quiz. </p>
+                        <p class="rqdata">author:seokhoh; date: THur Feb 7 00:00:00 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/check_access.html">Check Access</a> was provided
+                            by client.</p>
+                        <p class="rqveri">Testers with accessibility tries to access to a quiz and see the results.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Users can navigate questions.
+                        <p class="rqdesc">Users are able to navigate the questions on the quiz.</p>
+                        <p class="rqdata">author:seokhoh; date: THur Feb 7 00:00:00 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/take_quiz.html">Navigate</a> was provided
+                            by client.</p>
+                        <p class="rqveri">Tester completes full navigation through all the questions.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Users can record or modify the answers until submission.
+                        <p class="rqdata">Users are able to record or modify the answers unless the quiz is not submitted.</p>
+                        <p class="rqdata">author:seokhoh; date: THur Feb 7 00:00:00 NST 2019</p>
+                        <p class="rqvali">Use Case
+                            <a href="usecases/Multiple_attempt_quiz.html">Record And Modify</a>.</p>
+                        <p class="rqveri">Testers record and modify thrie answers on the quiz till submission.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Users can postpone attempt for later completion.
+                        <p class="rqdesc">Users are able to suspend attempt when they want to complete later on.</p>
+                        <p class="rqdata">author:seokhoh; date: THur Feb 7 00:00:00 NST 2019</p>
+                        <p class="rqvali">Use Case 
+                            <a href="usecases/tick_question.html">Postpone</a> was provided by client.</p>
+                        <p class="rqveri">Testers proceed attempt and postpone for later completion.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">User can record all incomplete or complete attempts.
+                        <p class="rqdesc">Users are able to record all attempts of a quiz.</p>
+                        <p class="rqdata">author:seokhoh; date: THur Feb 7 00:00:00 NST 2019</p>
+                        <p class="rqvali">Use case <a href="usecases/new_tab_report.html">Record</a></p>
+                        <p class="rqveri">Testers complete all attempts and check all recorded attempts.</p>
+                    </li>
+                    <!--My requirements aend-->
+                    <li class="rqitem" data-moscow="s">Users can select other quiz questions to complete.
+                        <p class="rqdesc">Users select a previous question to revise their answer, or a future quiz
+                            question to skip their current question.</p>
+                        <p class="rqdata">author:raflynn; date: Thurs Jan 10 10:43:30 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/take_quiz.html">Take Quiz</a>, variations 6b and 6c
+                            were provided by client.</p>
+                        <p class="rqveri">Tester skips a question on a multi-question quiz and returns to that question
+                            later before submitting the quiz.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">User can get a hint on a question
+                        <p class="rqdesc">The quiz allows the creator of the quiz to predefine question hints that can
+                            be activated by the student for partial credit.</p>
+                        <p class="rqdata">author: tvc802; date: Thu Jan 11 12:09:06 NST 2019</p>
+                        <p class="rqvali">See the <a href="usecases/quiz_hint.html">Quiz Hint </a> use case.</p>
+                        <p class="rqveri">Activating a hint and receving the correct amount of credit for the
+                            question based on the answer.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">User can retake a quiz (For no credit)
+                        <p class="rqdesc">The quiz may be retaken by a student for no credit, as use for further practice.</p>
+                        <p class="rqdata">author: rjlegge; date: Mon Jan 14 19:00:00 NST 2019</p>
+                        <p class="rqvali">Use case <a href="usecases/retake_quiz.html">Retake Quiz (No Credit)</a> was provided by client.</p>
+                        <p class="rqveri">Student retakes selected quiz with the system, instructor notice optional.</p>
+                    </li>
+                </ol>
+            </li>
+            <li class="rqitem">Users can create a quiz
+                <ol class="rqlist">
+                    <li class="rqitem" data-moscow="m">Users can create a quiz.
+                        <p class="rqdesc">Users with access can create new quizzes.</p>
+                        <p class="rqdata">author:agstacey; date: Fri Jan 11 12:28:40 NST 2019</p>
+                        <p class="rqvali">Use Case
+                            <a href="usecases/make_quiz.html">Make Quiz</a></p>
+                        <p class="rqveri">Tester creates a quiz and ensures students can recieve it.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Quiz creators are able to have multiple versions of a question
+                        <p class="rqdesc"> Quiz creators are able to enter multiple entries for each individual question
+                            for the computer to rotate through during subsequents attempts at the quiz.</p>
+                        <p class="rqdata">Author:Btmmertes; date: Sat Jan 12 20:40:15 NST 2019</p>
+                        <p class="rqvali">Refer to use case
+                            <a href="usecases/Multiple_attempt_quiz.html">Multiple attempt quiz</a>
+                        </p>
+                        <p class="rqveri">Creating a quiz with multiple attempts and multiple versions of a question.
+                            Over multiple sessions a specific version of a question should not repeat unless the number
+                            of quiz attempts exceeds the number of question versions.</p>
+                        </li>
+                    <li class="rqitem" data-moscow="m">Quizzes creation can be done with different types of questions
+                        <p class="rsdesc">Users making quizzes are presented with multiple options for types of
+                            questions including multiple choice, short answer, and pick from a list as options.</p>
+                        <p class="rqdata">author:etcrann; date: Sat Jan 12 13:14:35 NST 2019</p>
+                        <p class="rqvali">Use Case
+                            <a href="usecases/make_quiz.html">Make Quiz</a></p>
+                        <p class="rqveri">Tester creates a quiz and is able to present student with different
+                            questions.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Questions may be given in a random order.
+                        <p class="rqdesc">The instructor can provide each student with a different set of questions.
+                            These are chosen randomly from a list of questions given by the instructor.</p>
+                        <p class="rqdata">author:gjpower; date: Thurs Jan 10 22:08:30 NST 2019</p>
+                        <p class="rqvali">Use Case
+                            <a href="usecases/take_quiz.html">Take Quiz</a>,
+                            Stakeholder: Instructor wants quiz submission</p>
+                        <p class="rqveri">Attempt the quiz in a couple of sessions and ensure the questions provided
+                            are ordered differently.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m">Instructor can add an end date to complete the quiz.
+                        <p class="rqdesc">The instructor can specify how long the students will have to complete
+                            a quiz by adding an end date when the quiz is created.</p>
+                        <p class="rqdata">author:alm566; date: Fri Jan 11 16:30:40 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/make_quiz.html">Make Quiz</a></p>
+                        <p class="rqveri">Instructor creates a quiz and adds/chooses an end date.
+                            After end date, quiz can no longer be accessed by students.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m"> Quizzes can be assigned time limits.
+                        <p class="rqdesc">Users with the ability to create a quiz can assign a time limit to one of
+                            their quizzes, so that students must complete a quiz within that time window.</p>
+                        <p class="rqdata">author: kOlm; date: Fri Jan 11th 3:30:30 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/time_limit.html">Time Limit.</a></p>
+                        <p class="rqveri">Set a time limit onto a quiz, verify the session ends
+                            when the timer ends.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="c"> Instructor can hide or display results of the quiz.
+                        <p class="rqdesc">Instructors can decide whether or not they want the results of the quiz to
+                             be displayed to the user after their quiz is completed.</p>
+                        <p class="rqdata">author: tdh555; date: Sun Jan 13th 14:22:01 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/provide_solutions.html">Provide Solutions.</a></p>
+                        <p class="rqveri">Instructor selects option to show results after quiz ends, not selecting
+                            doesn't show by default. when the timer ends.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Users can specify number of possible quiz attempts.
+                        <p class="rqdesc">Instructor can input the desired number of attempts a student can have at a
+                            particular quiz.</p>
+                        <p class="rqdata">author:crd073; date: Sun Jan 13 20:28:40 NST 2019</p>
+                        <p class="rqvali">Use Case
+                            <a href="usecases/make_quiz.html">Make Quiz</a></p>
+                        <p class="rqveri">Tester completes the quiz the granted number of times and attempts an extra
+                            try.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="c"> Instructor can extend time limit of the quiz.
+                        <p class="rqdesc"> Instructor can add time to a quiz for a particular student or to all
+                            students if it is necessary. </p>
+                        <p class="rqdata"> author: ashevchenko; date: Sun Jan 13 21:38:00 NST 2019 </p>
+                        <p class="rqvali"> Use Case
+                            <a href="usecases/time_limit.html">Time limit
+                            Extension 7A</a></p>
+                        <p class="rqveri">Instructor creates a quiz and gives additional time during the quiz</p>
+                    </li>
+                    <li class="rqitem" data-moscow="c"> Instructor can modify the existing quiz.
+                        <p class="rqdesc"> Instructor can add questions, delete questions and can modify the weightage of any 
+                            question of an any pre-existing quiz. </p>
+                        <p class="rqdata"> author: suz250; date: Mon Jan 14 11:48:00 NST 2019 </p>
+                        <p class="rqvali"> Use Case
+                            <a href="usecases/quiz_modification.html">Quiz Modification</a></p>
+                        <p class="rqveri">Tester does the quiz and can observe the modifications</p>
+                    </li>
+                    <li class="rqitem" data-moscow="c"> Quizzes should notify time remaining.
+                        <p class="rqdesc"> A notification showing the remaining time should be prompted to students before 5 minutes 
+                             (or a specified time assigned by the instructor) and at the last minute. </p>
+                        <p class="rqdata"> author: mandhavarapu; date: Mon Jan 14 14:19:00 NST 2019 </p>
+                        <p class="rqvali"> Use Case
+                            <a href="usecases/quiz_modification.html">Quiz Modification</a></p>
+                        <p class="rqveri">Instructor tries the quiz to verify it.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="c">User with editing permissions can add images to quiz questions
+                        <p class="rqdesc">User can add image files that will be displayed to students along with the question text.</p>
+                        <p class="rqdata">author: nmpeckham; date: Mon Jan 14 19:53:28 NST 2019</p>
+                        <p class="rqvali">See the <a href="usecases/add_images.html">Add Images</a> use case.</p>
+                        <p class="rqveri">Taking the quiz and verifying that any added images are displayed.</p>
+                    </li>
+                </ol>
+            </li>
+            <li class="rqitem">User Authentication
+                <ol class="rqlist">
+                    <li class="rqitem" data-moscow="m">Users can authenticate with Login/Password
+                        <p class="rqdesc">User logins and passwords have to be supported, and there
+                            may be special users who are guests or not formally registered for the course.</p>
+                        <p class="rqdata">author:brown; date: Mon Jan 7 11:21:30 NST 2019</p>
+                        <p class="rqvali">Client interview on Dec 30 2019.
+                            Use Case <a href="usecases/login.html">Login</a>
+                            was provided by client.</p>
+                        <p class="rqveri">Tester logs into the system.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="c">Users can authenticate with their MUN credentials.
+                        <p class="rqdesc">In addition to SuD accounts, credentials from
+                            MUN should authenticate directly if already logged into a MUN session
+                            using the MUN system.  It is unknown at this time whether any API
+                            exposed by the MUN system allows this without clearance from MUN ITS</p>
+                        <p class="rqdata">author:brown; date: Mon Jan 7 11:21:30 NST 2019</p>
+                        <p class="rqvali">Client interview on Dec 30 2019.
+                            Variation in use Case <a href="usecases/login.html">Login</a>
+                            was provided by client.</p>
+                        <p class="rqveri">Tester logs into the system using MUN account credentials.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m">User can authenticate with either MUN/SuD credentials and
+                        will be granted access accordingly
+                        <p class="rqdesc">When a user is authenticated by the SuD, the user will be classified as
+                            either a student,instructor or a guest and will be granted access accordingly.
+                            i.e. a student will only be able to view their grades, past quizzes and any
+                            available quizzes. An instructor will be able to create a quiz/view past quizzes. A
+                            guest will only be able to view grades but no available quizzes. These are just
+                            examples and the SuD may or may not perform all these functions.</p>
+                        <p class="rqdata">author: vaandrade; date: Fri Jan 11 15:34:44 NST 2019</p>
+                        <p class="rqvali"> See Use Case <a href="usecases/login.html">Login</a> extension 2.a</p>
+                        <p class="rqveri"> Tester logs in with a student,instructor,guest credentials and verifies the
+                            access each of those accounts have</p>
+                    </li>
+					<li class="rqitem" data-moscow="c">Users can request a change in authentication Password.
+						<p class="rqdesc">User will be able to request a new authentication password by clicking
+							a link in the login window that will bring them to another webpage where they can enter
+							their old credentials to verify that they are the owner of the account.</p>
+						<p class="rqdata">author:jadonahue; date: Sun Jan 13 5:25:31 NST 2019</p>
+                        <p class="rqvali"> See Use Case <a href="usecases/login.html">Login</a> extention 1a.</p>
+                        <p class="rqveri">Tester logs into the system with student and instructor test accounts and
+						request a change of authentication Password. Tester logs into accounts with new Passwords
+						to verify the Password change has succeded.</p>
+					</li>
+                </ol>
+            </li>
+            <li class="rqitem">Marks and Grading
+                <ol class="rqlist">
+                    <li class="rqitem" data-moscow="s">Instructor can modify grades.
+                        <p class="rqdesc">Inital grading can be reviewed on a answer-by-answer basis
+                            and altered by a user with instructor priviledges.</p>
+                        <p class="rqdata">author:brown; date: Mon Jan 7 11:21:30 NST 2019</p>
+                        <p class="rqvali">Use case
+                            <a href="usecases/review_submission.html">Review Submission</a>
+                            use case.</p>
+                        <p class="rqveri">Log in as instructor, modify student grades.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Students must have 50% grade to pass.
+                        <p class="rqdesc">Students total marks must be greater than or equal to 50% of the maximum
+                            allowable marks on the quiz to pass.</p>
+                        <p class="rqdata">author:srmacdonald; date: Thurs Jan 10 11:50:30 NST 2019</p>
+                        <p class="rqvali">Use case
+                            <a href="usecases/passing_grade.html">Passing Grade</a> was provided by client.</p>
+                        <p class="rqveri">Students are presented with auto calculated grade at the
+                            end of the quiz.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Highest score will be recorded as a final grade
+                        <p class="rqdesc"> The highest attempt will be recorded and display in the final grade.</p>
+                        <p class="rqdata">author:TengHongLee; date: Sat Jan 12 04:37:30 NST 2019</p>
+                        <p class="rqvali">Use case
+                            <a href="usecases/HighestAttempt.html">Highest Attempt</a></p>
+                        <p class="rqveri">Tester submitted multiple attempts of a quiz and the highest grade is
+                            verified.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Students are notified of grade changes.
+                        <p class="rqdesc">Once an instructor modifies an existing grade,
+                            the affected student is notified. Means of notification
+                            has not been verified, so Email is assumed to be
+                            the default means for notification.</p>
+                        <p class="rqdata">author:brown; date: Mon Jan 7 11:21:30 NST 2019</p>
+                        <p class="rqvali">For details of the proposed interaction sequence, see the
+                            <a href="usecases/review_submission.html">Review Submission</a> use case.</p>
+                        <p class="rqveri">Log in as moderator, try the moderator operations.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Instructor can modify the weight of a quiz.
+                        <p class="rqdesc">A user with instructor priviledges can modify the weight of a
+                            student's quiz, making it worth more or less of the final mark.</p>
+                        <p class="rqdata">author: nj3701; date: Thur Jan 10 22:55:31 NST 2019</p>
+                        <p class="rqvali">Use case
+                            <a href="usecases/excused_absence.html">Excused Absence</a> use case.</p>
+                        <p class="rqveri">Log in as instructor and verify that the student's quiz
+                            weight has changed </p>
+                    </li>
+                    <li class="rqitem" data-moscow="s"> Instructor can modify the weight of a question.
+                        <p class="rqdesc">A user with instructor priviledges can modify the weight of an individual
+                            question in the quiz, making it worth more or less of the quiz grade</p>
+                        <p class="rqdata">author: cwl511; date: Fri Jan 11 14:42:15 NST 2019 </p>
+                        <p class="rqvali">Use Case <a href="usecases/make_quiz.html">Make Quiz</a>, step 5, provided by
+                            the client.</p>
+                        <p class="rqveri">Log in as instructor and assign different weights to quiz questions while
+                            creating a quiz.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s"> Instructor can export the student grades
+                        <p class="rqdesc">The instructor can export students' grades to a CSV file format to be viewed
+                            offline.</p>
+                        <p class="rqdata">author: mwang17; date: Fri Jan 11 20:42:15 NST 2019 </p>
+                        <p class="rqvali">Use Case <a href="usecases/export_grade.html">Export Grade</a> provided by the
+                            client.</p>
+                        <p class="rqveri">Log in as instructor, exports students' grades</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s"> Student user can see their average amongst all quizzes
+                        <p class="rqdesc">Any student user who has completed quizes will be able to see their average
+                            within the SuD.</p>
+                        <p class="rqdata">author: TroyPfinder; date: Sat Jan 12 20:42:16 NST 2019 </p>
+                        <p class="rqvali">Use case <a href="usecases/see_average.html">See Average</a> provided by the
+                            client.</p>
+                        <p class="rqveri">Log in as a student, navigate SuD appropriately, see the user's average
+                            quiz grade.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s"> Instructor can decide the minimum passing grade of the quiz
+                        <p class="rqdesc">Any student will be able to see the passing grade prior the quiz</p>
+                        <p class="rqdata">author: Suren Margaryan; date: Monday Jan 14 16:36:16 NST 2019 </p>
+                        <p class="rqvali">Use case <a href="usecases/passing_grade.html">Passing Grade</a> provided by the
+                            client.</p>
+                        <p class="rqveri">Log in as an Instructor, navigate SuD appropriately, decide the passing grade</p>
+                    </li>
+                </ol>
+            </li>
+            <li class="rqitem">Quiz Submission
+                <ol class="rqlist">
+                    <li class="rqitem" data-moscow="m">All answers are auto-saved upon quiz submission
+                        <p class="rqdesc">When the user submits the quiz, their current answer to each question
+                            is saved, ensuring their most recent answers are submitted.</p>
+                        <p class="rqdata">author: debrine; date: Thurs Jan 10 18:12:30 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/take_quiz.html">Take Quiz</a> was provided by
+                            client.</p>
+                        <p class="rqveri">Tester submits a quiz in which one or more answers were changed, then
+                            verifies most recent answers were sent to system upon submission.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m">A confirmation notication for submission appears
+                        <p class="rqdesc">When the user submits the quiz, the user is asked if they are actually ready
+                            to submit the quiz.
+                        </p>
+                        <p class="rqdata">author: david; date: Thurs Jan 11 18:00:00 NST 2019</p>
+                        <p class="rqvali">Use case <a href="usecases/take_quiz.html">Take Quiz</a> was provided
+                            by client.</p>
+                        <p class="rqveri">Tester submits the quiz.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">User gets a warning when trying to submit not finished quiz.
+                        <p class="rqdesc">Users get warning if one or more questions are left unanswered when
+                            trying to submit quiz.</p>
+                        <p class="rqdata">author:tjh557; date: Thurs Jan 10 3:12:30 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/take_quiz.html">Take Quiz</a>, Extension 10a1</p>
+                        <p class="rqveri">Tester skips one or more questions on a quiz and tries to submit.</p>
+                    </li>
+                </ol>
+            </li>
+            <li class="rqitem">Quiz Results
+                <ol class="rqlist">
+                    <li class="rqitem" data-moscow="s">Students can view solutions to completed quiz
+                        <p class="rqdesc">Once the quiz has been completed, and the quiz deadline for submission has
+                            passed, students will be able to view their quiz which now contains the correct
+                            solutions to each question along with their chosen answer.</p>
+                        <p class="rqdata">author:cssg02@mun.ca; id:200917250; date: Thurs Jan 10 12:55:10 NST 2019</p>
+                        <p class="rqvali">Use case <a href="usecases/provide_solutions.html">Provide Solutions</a></p>
+                        <p class="rqveri">Tester completes a quiz with the system and retrieves solutions after
+                            deadline passes</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m">A log entry for quiz result will be generated by SuD.
+                        <p class="rqdesc">Once the quiz has been submitted, its results along with student
+                            information will be saved.</p>
+                        <p class="rqdata">author:a44cdrs; id:200729390; date Thurs Jan 10 17:10:03 NST 2019</p>
+                        <p class="rqvali">Use case
+                            <a href="usecases/take_quiz.html">Take Quiz</a>, Stakeholder: Tech requires log of quiz
+                            submission</p>
+                        <p class="rqveri">Tester completes a quiz and Tech checks if a log entry is generated.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Students can view class average for a quiz.
+                        <p class="rqdesc">When a student recieves a grade for a quiz,
+                            and they review quiz their quiz results, they will be able to view the class average for
+                            the quiz in the review window.</p>
+                        <p class="rqdata">author:jtpnoel; date: Thurs Jan 10 15:13:30 NST 2019</p>
+                        <p class="rqvali">See the
+                        <a href="usecases/provide_solutions.html">Provide Solutions</a> use case, extension 4d.</p>
+                        <p class="rqveri">Instructor will calculate class average, then make sure it corresponds to
+                            the average the students are shown.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Student can email the professor after a quiz.
+                        <p class="rqdesc"> The student, upon recieving their grade, can email the professor assigning
+                            the quiz to ask about some of the questions they got wrong.</p>
+                        <p class="rqdata">author:Aidan Langer; date: Thursday Jan 11 09:56:05 2019</p>
+                        <p class="rqvali">Use case
+                            <a href="usecases/email-proffessor.html">Email Professor With Questions</a>
+                            use case.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Instructor can view question grading statistics.
+                        <p class="rqdesc"> After marks have been assigned for the quiz, the instructor can view which
+                            questions weremost frequently answered incorrectly.</p>
+                        <p class="rqdata">author:Damien Hoysradt; date: Friday Jan 11 15:57:00 2019</p>
+                        <p class="rqvali">Use case
+                            <a href="usecases/Question_Statistics.html">Question Statistics</a>
+                            use case.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m"> Users can check the grades of their individual quizzes
+                        <p class="rqdesc">Users can access a seperate part of the system to check the grades they've
+                            received on previous quizzes.</p>
+                        <p class="rqdata">author:cbowe; date: Fri Jan 11 16:03:17 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/take_quiz.html">Take Quiz</a> was provided
+                            by client.</p>
+                        <p class="rqveri">Student logs in and views grade after completing a quiz.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m"> Instructors can sort student list by quiz grade
+                        <p class="rqdesc">Instructors can sort student list by quiz grade after the quiz has
+                            been graded.</p>
+                        <p class="rqdata">author:weil; date: Fri Jan 11 20:03:17 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/sorting_students.html">Sorting Students</a>
+                            was provided by client.</p>
+                        <p class="rqveri">Log in as instructor, view student grades and sort student list by grade.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m">Instructors can give feedback to students
+                        <p class="rqdesc">Instructors can give feedback for quizzes which students can see after the
+                            quiz has been graded and displayed</p>
+                        <p class="rqdata">author:zm7162; date: Fri Jan 12 14:09:43 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/give_feedback.html">Give Feedback</a> was provided
+                            by client.</p>
+                        <p class="rqveri">Instructor logs in and provides feedback on each quiz for each student.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="m">students can rate difficulty of completed quizzes
+                        <p class="rqdesc">students can give socre out of five to rate the quiz difficulty after they
+                            complete this quiz</p>
+                        <p class="rqdata">author:hong wang; date: Fri Jan 12 17:09:43 NST 2019</p>
+                        <p class="rqvali">Use Case:
+                            <a href="usecases/rate_quizdifficulty.html">Rate quiz difficulty</a></p>
+                        <p class="rqveri">instructor enters the rating section of the selected quiz and checks updated
+                            ratings.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Instructor can see the average time it took for students to
+                        complete each quiz
+                        <p class="rqdesc">A user with instructor permissions can view the average amount of time it took
+                            for students to complete each quiz.</p>
+                        <p class="rqdata">author: tdf680; date: Sun Jan 13 19:30:10 NST 2019 </p>
+                        <p class="rqvali">Use case <a href="usecases/time_limit.html">Time Limit</a> provided by the
+                            client.</p>
+                        <p class="rqveri">Log in as an instructor, view details for a given quiz, see the average time
+                            it took.</p>
+                    </li>
+                </ol>
+            </li>
+            <li class="rqitem">Quiz Cancel
+                <ol class="rqlist">
+                    <li class="rqitem" data-moscow="s">Instructor can delete an online quiz.
+                        <p class="rqdesc">Instructor can delete an online quiz that he/she may no longer consider to be
+                            relevant to grade.</p>
+                        <p class="rqdata">author: oouvwie; date: Sat Jan 12 03:19:30 NST 2019</p>
+                        <p class="rqvali">Use Case <a href="usecases/delete_quiz.html">Delete Quiz</a></p>
+                        <p class="rqveri"> Quiz is no longer available for selection by any user.</p>
+                    </li>
+                    <li class="rqitem" data-moscow="s">Instructor can arrange a new quiz time
+                        <p class="rqdesc">Instructor can arrange a new quiz time if the original one is canceled due to some specific reason.</p>
+                        <p class="rqdata">author: WeicaiZhao; date: Sun Jan 13 19:01:20 NST 2019</p>
+                        <p class="rqvali">Use Case
+                            <a href="usecases/Arrange_new_quiz.html">Arrange new quiz time</a></p>
+                        <p class="rqveri">New quiz time is avaible for user after the instructor confirm</p>
+                    </li>
+                </ol>
+            </li>
+			<li class="rqitem">Quiz Notifications
+				<ol class="rqlist">
+					<li class="rqitem" data-moscow="s">Student can change notifications for a quiz.
+						<p class="rqdesc">Student can choose when prior to a quiz they want to be notified of it's 
+							time and date or how often to be notified.</p>
+						<p class="rqdata">author: sheb12; date: Mon Jan 14 18:00:00 NST 2019</p>
+						<p class="rqvali">Use Case
+							<a href="usecases/change_notifications.html">Change Notifications</a></p>
+						<p class="rqveri">Students will receive notifications according to set times.</p>
+					</li>
+					<li class="rqitem" data-moscow="s">Instructor can send notications of time/date changes made to quiz.
+						<p class="rqdesc">Instructor make changes to a time/date of a quiz and send notications to students.</p>
+						<p class="rqdata">author: jleandre; date: Mon Jan 14 20:00:00 NST 2019</p>
+						<p class="rqvali">Use Case
+							<a href="usecases/Time_DateUpdateNotification.html">Time/Date Update Notifications</a></p>
+						<p class="rqveri">Instructor will send notification to students of time/date changes .</p>
+				</ol>
+            </li>
+            <li class="rqitem">Users can give feedback.
+                <ol class="rqlist">
+                    <li class="rqitem" data-moscow="m">Users can give feedback
+                        <p class="rqdesc">Users should be able to give their feedback on the app based on their experience.</p>
+                        <p class="rqdata">author:samadanc; date: Mon Jan 14 09:15:30 NST 2019</p>
+                        <p class="rqvali">Client interview on Jan 10 2019. Use case
+                            <a href="usecases/feedback.html">Feedback</a> was provided by client.</p>
+                        <p class="rqveri">Tester gives feedback. </p>
+                    </li>
+		        </ol>
+            </li>
+        </ol>
+    </li>
+    <li class="rqitem"> Usability
+        <ol class="rqlist">
+            <li class="rqitem" data-moscow="s">Accessibility Features
+                <p class="rqdesc"> Standard accessibility options to make system navigation easier without specialized
+                    hardware requirement for people with disabilities.</p>
+                <p class="rqdata">author: Utsav Ashish Koju (uakoju); date: Saturday Jan 12 18:53:05 2019</p>
+                <p class="rqvali">Use case: <a href="usecases/accessibility.html">Accessibility</a></p>
+                <p>Ensure the site responds as expected to all the accessibilities options</p>
+            </li>
+        </ol>
+    </li>
+    <li class="rqitem"> Reliability
+        <ol class="rqlist">
+            <li class="rqitem" data-moscow="s">Supports modern web browsers
+                <p class="rqdesc">The site should support modern versions of web browsers so that the pages render and
+                    act as the developer of that page expects.</p>
+                <p class="rqdata">author: jaharrhy; date: Thu Jan 10 19:11:06 NST 2019</p>
+                <p class="rqvali">See the <a href="usecases/browser_support.html">Browser Support </a> use case.</p>
+                <p class="rqveri">Ensure the site works as expected across multiple browsers, in different
+                    enviroments, with different devices.</p>
+            </li>
+            <li class="rqitem" data-moscow="c">The website is compatible with any screen size.
+                <p class="rqdesc">The website supports different screen sizes and provides users flexible interface.</p>
+                <p class="rqdata">author: seokhoh; date: Mon Jan 14 20:36:33 NST 2019</p>
+                <p class="rqvali">Use Case <a href="usecases/device_adaptability.html">Device Adaptability</a></p>
+                <p class="rqveri">Tester accesses the website through a variety of different sizes deices.</p>
+            </li>
+            <li class="rqitem" data-moscow="m">The system supports restoration.
+                <p class="rqdesc">The system can record the process and time of the quiz when it is crushed so that user
+                    can restore amd continue to do it.</p>
+                <p class="rqdata">author: fcao; date: Sun Jan 13 01:41:00 NST 2019</p>
+                <p class="rqvali">Use Case <a href="usecases/System_Restoration.html">System Restoration.</a></p>
+                <p class="rqveri">Tester simulates the scene of crush and reopens the quiz to check if the previous data is recorded.</p>
+            </li>
+        </ol>
+    </li>
+    <li class="rqitem"> Performance
+    </li>
+    <li class="rqitem"> Supportability
+    </li>
+    <li class="rqitem"> Design constraints
+        <ol class="rqlist">
+            <li class="rqitem" data-moscow="m">The Flask framemork is used.
+                <p class="rqdesc">Use of the flask web development framework imposes design
+                    restrictions regarding how web services are stuructured and how mobile devices
+                    are supported. Much of the project architecture is pre-determined by the flask
+                    framework.</p>
+                <p class="rqdata">author:brown; date:Mon Jan 7 11:21:30 NST 2019</p>
+                <p class="rqvali">Imposed by the COMP2005 context of the project</p>
+                <p class="rqveri">Examine the implementation code.</p>
+            </li>
+        </ol>
+    </li>
+    <li class="rqitem"> Implementation requirements
+    </li>
+    <li class="rqitem"> Interface requirements
+    </li>
+    <li class="rqitem"> Physical requirements
+        <ol class="rqlist">
+            <li class="rqitem" data-moscow="w">Target deployment uses the MUN CS apache server.
+                <p class="rqdesc">The apache server at MUN CS is open to students, but cannot be
+                    configured by students. Attention must be paid to this requirement throughout the
+                    project to ensure there are no server configuration needs.</p>
+                <p class="rqdata">author:brown; date:Mon Jan 7 20:36:23 NST 2019</p>
+                <p class="rqvali">Imposed by the COMP2005 context of the project</p>
+                <p class="rqveri">Check the server IP address.</p>
+            </li>
+        </ol>
+    </li>
+</ol>
+</body>
+</html>
