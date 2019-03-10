@@ -44,7 +44,20 @@ class TakeQuiz:
   
     def __init__(self):
         '''
-        Attr
+        attributs:
+            quiz - quiz object.
+            questions - list of questions.
+            submit - boolean value (True : submitted / False : not submitted).
+            attemp - integer, count # of attempts.
+
+        methods:
+            checkAccess - check the accessibility of a user.
+            modifyAnswers - modify answers of a quiz.
+            navigateQuestions - print all questions of the quiz.
+            recordAnswers - record answers completed.
+            recordAttempts - record # of attempts and update.
+            submitQuiz - submit a quiz.
+            suspendAttempts - suspend user attempts for later submission.
         '''
         print('__init()__')
         #quiz = storage.get_quiz("quiz ID")
@@ -79,7 +92,7 @@ class TakeQuiz:
 
     def navigateQuestions(self):
         '''
-        show the user all questions from the quiz that the user enterd 
+        show the user all questions from the quiz that the user enterd.
         '''
         if self.submit:
             self.attempt += 1
@@ -90,7 +103,7 @@ class TakeQuiz:
 
     def recordAnswers(self, questionNumber):
         '''
-        record answers till submission
+        record answers till submission.
         '''
         if not self.checkAccess():
             print('login first to record your answers!')
@@ -101,7 +114,7 @@ class TakeQuiz:
     def modifyAnswers(self, questionNumber):
         '''
         get a new answer for the question and
-        modify answers that have been saved in storage
+        modify answers that have been saved in storage.
         '''
         newAnswer = input("Answer : ")
         #storage.editAnswers(questionNumber, newAnswer)
@@ -112,7 +125,7 @@ class TakeQuiz:
         '''
         suspend attempt for later submission
         set self.submit False and
-        update persist date to current status of submission 
+        update persist data to current status of submission.
         '''
         self.submit = False
         #storage.updateSubmit(self.subimt)
@@ -120,14 +133,14 @@ class TakeQuiz:
 
     def recordAttempts(self):
         '''
-        store numbers of attempts the persistence data
+        store numbers of attempts in the persistence data.
         '''
         #storage.updateAttempt(self.attempt)
         print("Your record is recorded : %d." %self.attempt)
 
     def submitQuiz(self):
         '''
-        submit function
+        submit function.
         '''
         self.submit = True
         print("Your submit is processed")
