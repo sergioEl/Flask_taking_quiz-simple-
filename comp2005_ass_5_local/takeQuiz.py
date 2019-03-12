@@ -30,18 +30,9 @@ attemptsLimitted = 3
 
 
 
-# Load default config and override config from an environment variable
-'''
-app.config.update(dict(
-    SECRET_KEY='development key',
-    USERNAME='admin',
-    PASSWORD='default',
-    KEY='0'
-))
-'''
 
 class TakeQuiz:
-  
+    
     def __init__(self):
         '''
         attributs:
@@ -65,8 +56,8 @@ class TakeQuiz:
         
         self.submit = False #quiz.isSubmitted()# should be added
         self.attempt = 0 #storage.getAttempts()
-        
-    #@app.route('/checkAccess')
+        self.answers = ["hi"]
+    
     def checkAccess(self):
         """
         This will check accessibility of a user
@@ -77,17 +68,19 @@ class TakeQuiz:
         which quiz creator set up.
         """
         accessibility = False
-        if 'logged_in' in session and session['logged_in']:
+        if 'logged_in' in session:#session['logged_in']:
             print('User is logged in')
             if self.attempt > attemptsLimitted:
                 print('no more than {} attempts allowed'.format(attemptsLimitted))
             else:
-                if isStudent(session['username']):
+                #if isStudent(session['username']):
                     print('You are good to proceed.')
                     accessibility = True
                     return accessibility
         else:
             print('Login first.')
+            userID = input("ID : ")
+            password = input("Password : ")
             return accessibility
 
     def navigateQuestions(self):
@@ -99,25 +92,31 @@ class TakeQuiz:
         #self.printQuestions()
         s = ' '.join(self.questions)
         print("question--- %s" %s)
+        return self.questions
 
-
-    def recordAnswers(self, questionNumber):
+   
+    def recordAnswers(self):
         '''
         record answers till submission.
         '''
         if not self.checkAccess():
             print('login first to record your answers!')
-            return 'login first haha!'
+            return 'login first and record ! haha!'
+        else:
+            return 'your answers are recorded!'
+        #for answer in self.answers:
+            #quizAttempts._answers.append(answer)
+        
+        
 
-        #userAnswers = storage.addAnswers(questionNumber, answer)
-
-    def modifyAnswers(self, questionNumber):
+    def modifyAnswers(self, questionNumber = 0):
         '''
         get a new answer for the question and
         modify answers that have been saved in storage.
         '''
         newAnswer = input("Answer : ")
-        #storage.editAnswers(questionNumber, newAnswer)
+        self.answers[questionNumber] = newAnswer
+        #storage.get_quiz(quiz_ID Here)
         return newAnswer
         
         
@@ -130,6 +129,7 @@ class TakeQuiz:
         self.submit = False
         #storage.updateSubmit(self.subimt)
         print("Your attempt is suspended.")
+        return self.submit
 
     def recordAttempts(self):
         '''
@@ -137,6 +137,8 @@ class TakeQuiz:
         '''
         #storage.updateAttempt(self.attempt)
         print("Your record is recorded : %d." %self.attempt)
+        #quiz.add_quiz_attempt(quizAttempts)
+        return self.attempt
 
     def submitQuiz(self):
         '''
@@ -144,6 +146,7 @@ class TakeQuiz:
         '''
         self.submit = True
         print("Your submit is processed")
+        return "Your submit is processed"
 
 def main():
     '''
@@ -152,16 +155,21 @@ def main():
     t = TakeQuiz()
     t.checkAccess()
     t.navigateQuestions()
-    t.recordAnswers(2)
+    t.recordAnswers()
     t.suspendAttempts()
-    t.modifyAnswers(1)
+    t.modifyAnswers()
     t.recordAttempts()
     t.submitQuiz()
+    print(t.answers[0])
+    
 
 if __name__ == "__main__":
     import sys
 
     #storage = persist.Persist('Brown.dat')
-    app = Flask(__name__)
+    #quiz = storage.get_quiz(quiz_ID Here)
+    #questions = quiz.get_questions() - list of all questions
+    #quizAttempts = quiz.get_quiz_attempts_by_student(stuID)
+    
     main()
 
