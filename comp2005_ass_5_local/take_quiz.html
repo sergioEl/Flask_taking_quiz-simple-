@@ -13,11 +13,11 @@ h2, p {
 }
 </style>
 
-<p><strong>Title:</strong> check_access</p>
+<p><strong>Title:</strong> take_quiz</p>
 <p><strong>Primary Actor:</strong> User</p>
 <p><strong>Stakeholders and Interests:</strong></p>
 <blockquote>
-<p>User : Access limitations, such as student status, time, and attempt, are checked to proceed a quiz.</p>
+<p>User : Access a quiz, navigate questions of the quiz.</p>
 </blockquote>
 <p><strong>Precondition</strong>: User has to be logged in the system.</p>
 <p><strong>Trigger</strong>: User tries to access to the quiz.</p>
@@ -28,13 +28,22 @@ h2, p {
 <li>SuD checks status of the user, time, and attmpts.</li>
 <li>SuD completes the accessbility check.</li>
 <li>User is permitted to proceed the quiz.</li>
+<li>User navigates the questiosn.</li>
+<li>SuD shows the questions that the user requested.</li>
+<li>User submits the quiz.</li>
+
+<li></li>
 </ol>
 <p><strong>Extensions</strong>:</p>
 <blockquote>
 <p>2a. There does not exists criteria set up .</p>
 <blockquote><p>2a1. Default criteria are applied.</p></blockquote>
-<blockquote><p>2aw. SuD inquiries users new criteria for the access limitations.</p></blockquote>
-<p>Variation: 3a. User can check the outcome of the access check.</p>
+<blockquote><p>2a2. SuD inquiries users new criteria for the access limitations.</p></blockquote>
+<p>Variation: </p>
+<blockquote><p>5a. User can saves the answers.</p></blockquote>
+<blockquote><p>5b. User can suspends current attempt for later submission.</p></blockquote>
+<p>7a. All the questions are not answered.</p>
+<blockquote><p>7a1. Warn the user to complete all questions before the submission.</p></blockquote>
 </blockquote>
 </body>
 </html>

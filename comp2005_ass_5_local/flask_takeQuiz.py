@@ -28,7 +28,9 @@ t = TakeQuiz()
 
 @app.route('/')
 def check():
-    return str(t.checkAccess())
+    flash("Accessibility : " + str(t.checkAccess()))
+    return redirect(url_for('question'))
+    #return str(t.checkAccess())
 
 @app.route('/questions')
 def question():
@@ -37,21 +39,32 @@ def question():
 
 @app.route('/record')
 def record():
-    return t.recordAnswers()    
+    flash("Record : " + str(t.recordAnswers()))
+    return redirect(url_for('question'))
+ #   return t.recordAnswers()    
 
 @app.route('/sus')
 def sus():
-    return str(t.suspendAttempts())
+    flash("suspend : " + str(t.suspendAttempts()))
+    return redirect(url_for('question'))
+ #   return str(t.suspendAttempts())
 
 @app.route('/modi')
 def modi():
-    return t.modifyAnswers()
+    flash("modify : " + str(t.modifyAnswers()))
+    return redirect(url_for('question'))
+    #return t.modifyAnswers()
 
 @app.route('/recordAttempt')
 def recordAt():
-    return str(t.recordAttempts())
+    flash("attempt recorded : " + str(t.recordAttempts()))
+    return redirect(url_for('question'))
+ #   return str(t.recordAttempts())
 
 @app.route('/submit')
 def submit():
-    return t.submitQuiz()
+    flash("submission : " + str(t.submitQuiz()))
+    return render_template('show_entries.html', entries=[])
+ #   return redirect(url_for('question'))
+    #return t.submitQuiz()
     
