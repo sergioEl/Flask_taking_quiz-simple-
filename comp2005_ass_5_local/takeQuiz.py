@@ -105,10 +105,14 @@ class TakeQuiz:
         '''
         if self.questions:#If questions are existing.
             s = ' '.join(self.questions)
+            print("question--- %s" %s)
+            return self.questions
         else:
             s = "There is no question created yet!"
-        print("question--- %s" %s)
-        return self.questions
+            print("question--- %s" %s)
+            return s
+       
+        
 
    
     def recordAnswers(self):
@@ -173,22 +177,22 @@ class TakeQuiz:
         print("submission processed")
         return "Your submission is processed"
 
-def main():
-    '''
-    This is for testing
-    '''
-    t = TakeQuiz()
-    t.checkAccess()
-    t.navigateQuestions()
-    t.recordAnswers()
-    t.suspendAttempts()
-    t.modifyAnswers()
-    t.recordAttempts()
-    t.submitQuiz()
-    print(t.answers[0])
-    
-
-if __name__ == "__main__":
-    import sys    
-    main()
+##def main():
+##    '''
+##    This is for testing
+##    '''
+##    t = TakeQuiz()
+##    t.checkAccess()
+##    t.navigateQuestions()
+##    t.recordAnswers()
+##    t.suspendAttempts()
+##    t.modifyAnswers()
+##    t.recordAttempts()
+##    t.submitQuiz()
+##    print(t.answers[0])
+##    
+##
+##if __name__ == "__main__":
+##    import sys    
+##    main()
 
