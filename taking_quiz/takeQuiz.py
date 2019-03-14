@@ -2,18 +2,20 @@
 ## COMP2005 assignment5
 ## Seokho Han 201761541
 ## Programmer_3_take_quiz
-"""
-    check access
-    - student and time
-    - limit number of attempts
+"""Take quiz
 
-    navigate questions
+    Check accessibility(type of user, time, and # of attempts),
+    navigate questions after accessibility is authenticated,
+    record / modify answers till a user submits the quiz,
+    suspend current attempt so that user can continue the quiz till submission,
+    and record all attempts with its status(complet / incomplete).
 
-    record / modify answers untill submission
+    Construct TakeQuiz object and user can interact with it through flask.
 
-    suspend attempt for later completion/submission
+    This module uses data that are retrieved from Persist module.
 
-    record all complete or incomplete attempts
+    class:
+        TakeQuiz - user can take a quiz by creating this object.
 """
 
 import os
@@ -21,33 +23,30 @@ import sys
 import datetime
 #import persist
 
-#from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-
 session = {'username' : None,
            'logged_in' : False}
            #'attemp' : None}
 attemptsLimitted = 3
 
 
-
+__all__ = ["TakeQuiz"]
 
 class TakeQuiz:
-    
-    def __init__(self):
-        '''
-        attributs:
-            storage - persist of quizzes, questions, quizattempts, and users.
-                quiz:
-                    Quiz._questions - list of Question objects.
-                    Quiz._is_submitted - boolean variable.
-                questions - list of questions.
-                quizAttempts:
-                    QuizAttempt._answers - list of all answers.
-            self.submit - boolean value (True:submitted / False:not submitted).
-            self.attemp - integer, count # of attempts.
-            self.answers - list of answers.
+    '''Take quiz
 
-        methods:
+        Attributes:
+            storage : persist.Persist object - of quizzes, questions,
+            quizattempts, and users.
+                quiz : object - shared_classes.Quiz object.
+                    Quiz._questions : list - of Question objects.
+                    Quiz._is_submitted : boolean - submission of quiz.
+                questions : list - of shared_classes.Question object.
+                quizAttempts: list - of shared_classes.QuizAttempt object.
+            submit : boolean - (True:submitted / False:not submitted).
+            attemp : integer - count # of attempts.
+            answers : list - of answers.
+
+        Methods:
             closePersist - close the storage.
             checkAccess - check the accessibility of a user.
             modifyAnswers - modify answers of a quiz.
@@ -57,19 +56,25 @@ class TakeQuiz:
             submitQuiz - submit a quiz.
             suspendAttempts - suspend user attempts for later submission.
         '''
+    def __init__(self, quizId = 0, studentId = 0):
+        '''
+        Args:
+            quizID - valid quiz id for a quiz
+            studentId - valid student id
+        '''
         print('__init()__')
-        #storage = persist.Persist('Brown.dat')
+        #storage = persist.Persist()
         #quiz = storage.get_quiz("quiz ID")
         #quizAttempts = storage.get_quiz_attempts_by_student(quizID, stuID)
-        self.questions =["This is question_1", "This is question_2"] #quiz._questions# list
+        self.questions =["This is question_1", "This is question_2"] #quiz._questions
         
         self.submit = False#quiz._is_submitted# should be added
         self.attempt = 0 #initial value
-        self.answers = ["first answer is always free"] #
+        self.answers = ["first answer is always free"]
 
     def closePersist(self):
         '''
-        close the persist.
+        Close the persist.Persist object.
         '''
  #       sotrage.close()
         return "storage closed"
@@ -82,6 +87,9 @@ class TakeQuiz:
         if the time is within valid period, and
         if attempts of the user exceed the limitation
         which quiz creator set up.
+
+        Return:
+            boolean value of accessibility.
         """
         accessibility = False
         if 'logged_in' in session:#and session['user_type'].equals('s'):
@@ -101,7 +109,16 @@ class TakeQuiz:
 
     def navigateQuestions(self):
         '''
-        show the user all questions from the quiz that the user enterd.
+        Let the user take all questions from the quiz that the user enterd.
+
+        Return:
+            list of questions.
+
+        This method will provide three choices.
+        One is for submission,
+        and one is for modifying answers,
+        and the other is for suspending current attempt.
+        
         '''
         if self.questions:#If questions are existing.
             s = ' '.join(self.questions)
@@ -111,13 +128,13 @@ class TakeQuiz:
             s = "There is no question created yet!"
             print("question--- %s" %s)
             return s
-       
-        
-
    
     def recordAnswers(self):
         '''
-        record answers till submission.
+        Record answers till submission.
+
+        Return:
+            list of answers checked.
         '''
         if not self.checkAccess():
             print('login first to record your answers!')
@@ -126,10 +143,17 @@ class TakeQuiz:
  #           quizAttempts._answers = answers
             return 'your answers are recorded!'
         
-    def modifyAnswers(self, questionNumber = 0):
+    def modifyAnswers(self, answer, questionNumber = 0):
         '''
-        get a new answer for the question and
+        Get a new answer for the question and
         modify the previous answer.
+
+        Args:
+            answer : string - answer for a questions
+            questionNumber : integer - # of the question
+
+        Return:
+            msg - message back to the user the result of modification
         '''
         newAnswer = input("Answer : ")
         self.answers[questionNumber] = newAnswer
@@ -138,7 +162,7 @@ class TakeQuiz:
          
     def suspendAttempts(self):
         '''
-        suspend attempt for later submission
+        Suspend attempt for later submission
         set self.submit False and
         update persist data to current status of submission.
         '''
@@ -150,7 +174,7 @@ class TakeQuiz:
 
     def recordAttempts(self):
         '''
-        store numbers of attempts in the persistence data.
+        Store numbers of attempts in the persistence data.
         '''
  #       newQuizAttempt = QuizAttempt(student, st_time, end_time, answers)
  #       storage.add_quiz_attempt(quizID, student, newQuizAttempt)
