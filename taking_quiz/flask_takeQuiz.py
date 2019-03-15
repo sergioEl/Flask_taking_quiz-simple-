@@ -9,7 +9,7 @@ flask module for takeQuiz.py
 import os
 import sys
 import datetime
-from takeQuiz import TakeQuiz
+from thisIsTakingQuiz import TakeQuiz
 #import persist
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
