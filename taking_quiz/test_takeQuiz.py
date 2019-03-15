@@ -10,7 +10,7 @@ import stat
 import datetime
 #import persist
 from time import sleep
-from takeQuiz import TakeQuiz
+from thisIsTakingQuiz import TakeQuiz
 
 class TestTakeQuiz(unittest.TestCase):
 
@@ -26,12 +26,27 @@ class TestTakeQuiz(unittest.TestCase):
         tq = TakeQuiz()
         self.assertEqual(True, tq.checkAccess(), msg = 'Check process failed')
 
+    def test_check_fake_access(self):
+        tq = TakeQuiz(0, None)
+        self.assertEqual(False, tq.checkAccess(), msg = 'This should fail')
+
     def test_navigate_questions(self):
         tq = TakeQuiz()
         for quiz in self.post_data:
             tq.questions = quiz[1]
             self.assertEqual(quiz[1], tq.navigateQuestions(), \
-                             msg = 'Questions {} are not matching with {}'.format(quiz[1], tq.navigateQuestions()))
+                             msg = 'Questions {} are not matching with {}'\
+                             .format(quiz[1], tq.navigateQuestions()))
+            
+    def test_navigate_none_questions(self):
+        tq = None
+        with self.assertRaises(IndexError):
+            for quiz in self.post_data:
+                tq.questions = quiz[1]
+                self.assertEqual(quiz[1], tq.navigateQuestions(),\
+                                 msg = 'Questions {} are not matching with {}'\
+                                 .format(quiz[1], tq.navigateQuestions()))
+            
 
     def test_record_answers(self):
         tq = TakeQuiz()
@@ -40,9 +55,8 @@ class TestTakeQuiz(unittest.TestCase):
         comparing values of TakeQuiz.answers with ones of QuizAttempts._answers.
         '''
         tq.recordAnswers()
-        self.assertEqual(tq.answers,[],msg = 'Answers are not recorded at all!') #persist.Persist().
-        #get_attempts_by_student('None','None'),
-    #                msg = 'Answers are not recorded at all!')
+        self.assertEqual(tq.answers, True, \
+                         msg = 'Answers are not recorded at all!')
 
     def test_modify_answer(self):
         tq = TakeQuiz()
@@ -50,17 +64,24 @@ class TestTakeQuiz(unittest.TestCase):
         queNum = 0
         for quiz in self.post_data:
             quiz[2][queNum] = newAnswer
-            tq.modifyAnswers(queNum)
-            self.assertEqual(quiz[2][queNum], tq.answers[queNum], msg = 'Answer is not modified!')
+            tq.modifyAnswers()
+            self.assertEqual(tq.modifyAnswers(), True,\
+                             msg = 'Answer is not modified!')
 
     def test_suspend_attempt(self):
         '''
         check if # of attempts changes when user suspends the attempts
         and tries to navigate the quiz again.
         '''
+        tq = TakeQuiz()
+        tq.suspendAttempts()
+        self.assertEqual(tq.suspendAttempts(), True, msg = 'cannot suspend attempts')
 
     def test_record_attempts(self):
         '''test for checking # of attempts being sent to the persist'''
+        tq = TakeQuiz()
+        tq.recordAttempts()
+        self.assertEqual(tq.suspendAttempts(), True, msg = 'cannot record attempts')
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
