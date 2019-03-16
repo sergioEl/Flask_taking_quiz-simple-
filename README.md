@@ -18,5 +18,6 @@ tests - folder for the unit test examples.
 
 TO RUN THE FLASK APPLICATION:
     with flask installed the shell commands are:
+        $ pip3 install Flask
         $ export FLASK_APP=flask_takeQuiz.py
         $ flask run

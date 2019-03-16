@@ -35,9 +35,12 @@
     answers : list - of answers.
     
     Methods:
+    showAllQuiz - present available quizzes to the user.
+    getQuiz - present a selected quiz by the user.
     closePersist - close the storage.
     checkAccess - check the accessibility of a user.
     navigateQuestions - print all questions of the quiz.
+    showQuestion - present a question of the quiz selected by the user.
     recordAnswers - record answers completed.
     modifyAnswers - modify answers of a quiz.
     suspendAttempts - suspend user attempts for later submission.
@@ -51,16 +54,37 @@ import datetime
 
 
 storage = {}
+selectedQuiz = None
+
+def showAllQuiz():
+    '''
+    Show all available quizzes.
+    Quizzes are retrieved from persist.
+    
+    Return:
+        list of quizzes
+    
+    '''
+    global storage
+    storage["Quiz"] = []
+    return storage["Quiz"]
 
 def getQuiz(quizNum):
     '''
     Retrieve all available quizzes from persist.
 
+    Args:
+        quizNum : int - quiz number
+
     Return:
-        obgject of quizNum Quiz
+        list of quizNum Quiz
     '''
+    global selectedQuiz
     
-    return Quiz(quizNum)
+    qs = storage["Quiz"]
+    q = qs[quizNum]
+    selectedQuiz = q
+    return selectedQuiz
 
 def closePersist():
     '''
@@ -72,7 +96,7 @@ def closePersist():
     #sotrage.close()
     return True
 
-def checkAccess():
+def checkAccess(studentId = "drown"):
     """
     This will check accessibility of a user
     by checking if the user is a student,
@@ -86,45 +110,64 @@ def checkAccess():
     attemptsLimitted = 3 # This will be retrieved from persist.
     accessibility = True
 
-    if self.studentId: # if a user has a studentId, it menas he's a student.
-        print('User is logged in')
-        if self.attempt > attemptsLimitted:
+    if studentId:
+        if attempt > attemptsLimitted:
             print('no more than {} attempts allowed'.format(attemptsLimitted))
+            accessibility = False
         else:
-            print('You are good to proceed.')
-            accessibility = True
-            return accessibility
+            if datetime.datetimw.now() < Quiz.settime
+                print('You are good to proceed.')
+                accessibility = True
     else: # if a user is not a student.
-        print('Login first.')
-        userID = input("ID : ")
-        password = input("Password : ")
-        return accessibility
+        accessibility = False
+    return accessibility
     </code>
     """
-    return True
+    return False
 
 def navigateQuestions():
     '''
     Let the user take all questions from the quiz that the user enterd.
 
-    Return:
-        list of questions.
-
-    This method will provide three choices.
-    One is for submission when all questions have answers,
-    and one is for modifying answers whenever user wants to change,
-    and the other is for suspending current attempt.
-
-
-    <code>
-    if self.questions:# if questions are existing.
-        return self.questions
-    else:# if there is no question.
-        e = []
-        return e
-    </code>
+    Show the user questions one by one and acquire an answer for each question till
+    all questions are answered or the user requests suspend an attempt.
+    When all questions are answered, the user can submit the quiz, suspend the attempt
+    , or modify previous answers.
+    
     '''
-    return self.questions
+#    global storage
+#    i = 0
+#    sus = False
+#    while not sus:
+#        try:
+#            showQuestion(selectedQuiz, i)
+#            ans[i] = input("answer: ")
+#            i ++
+#            qNum = int(input("question number?"))
+#            if qNum:
+#                showQuestion(selectedQuiz, i)
+#                ans[i] = input("answer: ")
+#                i ++
+#        except IndexError:
+#            sus = True
+    i = 0
+    showQuestion(selectedQuiz, i)
+
+
+def showQuestion(quiz, queNum):
+    '''
+    Show a question of a number
+    
+    Args:
+        quiz : Quiz object
+        queNum : int - number for the quiz
+        
+    Return:
+        questions srting
+    '''
+    s = "ok"
+    return s
+
 
 def recordAnswers():
     '''
@@ -133,14 +176,19 @@ def recordAnswers():
     Return:
         bollean of result of this.
     '''
+    
     return True
 
-def modifyAnswers():
+def modifyAnswers(new_answer, queNum):
     '''
     Get a new answer for the question and
     modify the previous answer.
     When this method is called, the flask will handle
-    new_answer(str) and question_#(int) by using POST method.
+    new_answer(str) and queNum(int) by using POST method.
+
+    Args:
+        new_answer : str - new answer
+        queNum : int - question #
 
     Return:
         boolean of result of this.
@@ -182,25 +230,18 @@ def recordAttempts():
 
 def submitQuiz():
     '''
-    Submit the quiz.
+    Submit the quiz if the quiz is complete.
     increment the # of attempts for the quiz.
     record all answers.
     record attempt.
+    Store above data in Persist.
 
 
     Return:
         boolean of result of this.
     <code>
-    self.submit = True
-    if self.submit:
-        self.attempt += 1
-    self.recordAttempts()
-    self.submit = False
+    if (len(storage["answer"]) != len(selectedQuiz.questions)):
+        return False
     </code>
     '''
     return True
-
-class Quiz:
-    def __init__(self, qNum):
-        self.title = "First Quiz"
-        self.num = qNum

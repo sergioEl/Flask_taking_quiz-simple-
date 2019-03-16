@@ -10,7 +10,7 @@ import stat
 import datetime
 #import persist
 from time import sleep
-from thisIsTakingQuiz import TakeQuiz
+import takeQuiz 
 
 class TestTakeQuiz(unittest.TestCase):
 
@@ -22,50 +22,51 @@ class TestTakeQuiz(unittest.TestCase):
                         ("quiz5", ["ques11", "ques22", "ques33"], ["In the sands of time"], True),
                 ]
 
-    def test_check_access(self):
-        tq = TakeQuiz()
-        self.assertEqual(True, tq.checkAccess(), msg = 'Check process failed')
+    def test_show_all_quiz(self):
+        l = []
+        for i in self.post_data:
+            l.append(i[0])
+        self.assertEqual(l, takeQuiz.showAllQuiz(), msg = 'Different quizzes')
 
-    def test_check_fake_access(self):
-        tq = TakeQuiz(0, None)
-        self.assertEqual(False, tq.checkAccess(), msg = 'This should fail')
+    def test_get_quiz(self):
+        takeQuiz.storage['Quiz'] = self.post_data
+        self.assertEqual(takeQuiz.getQuiz(0), self.post_data[0], msg='match x')
+
+    def test_check_access(self):
+        self.assertEqual(True, takeQuiz.checkAccess("brown"), msg = 'Check process failed')
 
     def test_navigate_questions(self):
-        tq = TakeQuiz()
         for quiz in self.post_data:
-            tq.questions = quiz[1]
-            self.assertEqual(quiz[1], tq.navigateQuestions(), \
+            self.assertEqual(quiz[1], takeQuiz.navigateQuestions(), \
                              msg = 'Questions {} are not matching with {}'\
-                             .format(quiz[1], tq.navigateQuestions()))
+                             .format(quiz[1], takeQuiz.navigateQuestions()))
             
     def test_navigate_none_questions(self):
         tq = None
         with self.assertRaises(IndexError):
             for quiz in self.post_data:
-                tq.questions = quiz[1]
-                self.assertEqual(quiz[1], tq.navigateQuestions(),\
+                self.assertEqual(quiz[1], takeQuiz.navigateQuestions(),\
                                  msg = 'Questions {} are not matching with {}'\
-                                 .format(quiz[1], tq.navigateQuestions()))
+                                 .format(quiz[1], takeQuiz.navigateQuestions()))
             
 
     def test_record_answers(self):
-        tq = TakeQuiz()
         '''
         This check weather or not answers are stored in the persist by
         comparing values of TakeQuiz.answers with ones of QuizAttempts._answers.
         '''
-        tq.recordAnswers()
-        self.assertEqual(tq.answers, True, \
+ 
+        self.assertEqual(takeQuiz.recordAnswers, True, \
                          msg = 'Answers are not recorded at all!')
 
     def test_modify_answer(self):
-        tq = TakeQuiz()
+    
         newAnswer = "new_one"
         queNum = 0
         for quiz in self.post_data:
             quiz[2][queNum] = newAnswer
-            tq.modifyAnswers()
-            self.assertEqual(tq.modifyAnswers(), True,\
+          
+            self.assertEqual(takeQuiz.modifyAnswers(newAnswer, queNum), True,\
                              msg = 'Answer is not modified!')
 
     def test_suspend_attempt(self):
@@ -73,15 +74,17 @@ class TestTakeQuiz(unittest.TestCase):
         check if # of attempts changes when user suspends the attempts
         and tries to navigate the quiz again.
         '''
-        tq = TakeQuiz()
-        tq.suspendAttempts()
-        self.assertEqual(tq.suspendAttempts(), True, msg = 'cannot suspend attempts')
+        takeQuiz.suspendAttempts()
+        self.assertEqual(takeQuiz.suspendAttempts(), True, msg = 'cannot suspend attempts')
 
     def test_record_attempts(self):
         '''test for checking # of attempts being sent to the persist'''
-        tq = TakeQuiz()
-        tq.recordAttempts()
-        self.assertEqual(tq.suspendAttempts(), True, msg = 'cannot record attempts')
+    
+        takeQuiz.recordAttempts()
+        self.assertEqual(takeQuiz.suspendAttempts(), True, msg = 'cannot record attempts')
+
+    def test_submit_quiz(self):
+        self.assertEqual(takeQuiz.submitQuiz(), False, msg = 'submission x working')
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

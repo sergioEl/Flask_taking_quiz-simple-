@@ -9,7 +9,7 @@ flask module for takeQuiz.py
 import os
 import sys
 import datetime
-from thisIsTakingQuiz import TakeQuiz
+import takeQuiz 
 #import persist
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
@@ -24,46 +24,46 @@ app.config.update(dict(
     PASSWORD='default',
     KEY='0'
 ))
-t = TakeQuiz()
+
 
 @app.route('/')
 def check():
-    flash("Accessibility : " + str(t.checkAccess()))
+    flash("Accessibility : " + str(takeQuiz.checkAccess()))
     return redirect(url_for('question'))
     #return str(t.checkAccess())
 
 @app.route('/questions')
 def question():
-    q = t.navigateQuestions()
+    q = takeQuiz.navigateQuestions()
     return render_template('show_entries.html', entries=q)
 
 @app.route('/record')
 def record():
-    flash("Record : " + str(t.recordAnswers()))
+    flash("Record : " + str(takeQuiz.recordAnswers()))
     return redirect(url_for('question'))
  #   return t.recordAnswers()    
 
 @app.route('/sus')
 def sus():
-    flash("suspend : " + str(t.suspendAttempts()))
+    flash("suspend : " + str(takeQuiz.suspendAttempts()))
     return redirect(url_for('question'))
  #   return str(t.suspendAttempts())
 
 @app.route('/modi')
 def modi():
-    flash("modify : " + str(t.modifyAnswers()))
+    flash("modify : " + str(takeQuiz.modifyAnswers("1", 0)))
     return redirect(url_for('question'))
     #return t.modifyAnswers()
 
 @app.route('/recordAttempt')
 def recordAt():
-    flash("attempt recorded : " + str(t.recordAttempts()))
+    flash("attempt recorded : " + str(takeQuiz.recordAttempts()))
     return redirect(url_for('question'))
  #   return str(t.recordAttempts())
 
 @app.route('/submit')
 def submit():
-    flash("submission : " + str(t.submitQuiz()))
+    flash("submission : " + str(takeQuiz.submitQuiz()))
     return render_template('show_entries.html', entries=[])
  #   return redirect(url_for('question'))
     #return t.submitQuiz()
