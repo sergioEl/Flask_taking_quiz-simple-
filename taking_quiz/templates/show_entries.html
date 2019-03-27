@@ -1,7 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <!-- <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+  
+  <ul class=entries>
+    {% for entry in entries %}
+  
+      <li><em>{{loop.index}}</em>. <b>{{ entry }}</b> 
+          
+  
+    {% else %}
+      <li><em>Log in please.</em>
+    {% endfor %}
+    </ul>
+    <!-- <form action="{{ url_for('quiz') }}" method=post class=add-entry>
       <dl>
         <dt>Title:
         <dd><input type=text size=30 name=title>
@@ -11,14 +22,6 @@
       </dl>
     </form> -->
   {% endif %}
-  <ul class=entries>
-  {% for entry in entries %}
 
-    <li><em>{{loop.index}}</em>. <b>{{ entry }}</b> 
-        
-
-  {% else %}
-    <li><em>Log in please.</em>
-  {% endfor %}
-  </ul>
+  
 {% endblock %}

@@ -2,14 +2,15 @@
 ## COMP2005 assignment5
 ## Seokho Han 201761541
 ## Programmer_3_take_quiz
+
 """Take quiz
 
-    Shows all available quizzes to user,
-    user can select specific quiz,
-    check accessibility(type of user, time, and # of attempts),
-    navigate questions after accessibility is authenticated,
-    record / modify answers till a user submits the quiz,
-    suspend current attempt so that user can continue the quiz till submission,
+    Shows all available quizzes to a user,
+    a user can select a specific quiz,
+    check accessibility(type of the user, time, and # of attempts),
+    navigate questions after accessibility authentication is done,
+    record / modify answers till the user submits the quiz,
+    suspend current attempt so that # of attempts remain,
     and record all attempts with its status(complet / incomplete).
 
     Construct TakeQuiz object and user can interact with it through flask.
@@ -22,54 +23,58 @@
     Take quiz
     
     Attributes:
-    storage : persist.Persist object - of quizzes, questions,
-    quizattempts, and users.
-    quiz : object - shared_classes.Quiz object.
-    Quiz._questions : list - of Question objects.
-    Quiz._is_submitted : boolean - submission of quiz.
-    questions : list - of shared_classes.Question object.
-    quizAttempts: list - of shared_classes.QuizAttempt object.
-    studentId : string - student ID.
-    submit : boolean - (True:submitted / False:not submitted).
-    attemp : integer - count # of attempts.
-    answers : list - of answers.
+        storage : Persist() - shelve of persist.Persist()
+        selectedQuiz : Quiz - Quiz obj selected
+        quizAttempt : quizAttempt - current quizAttempt object
+        user : User - User object that is attempting this quiz
     
     Methods:
-    showAllQuiz - present available quizzes to the user.
-    getQuiz - present a selected quiz by the user.
-    closePersist - close the storage.
-    checkAccess - check the accessibility of a user.
-    navigateQuestions - print all questions of the quiz.
-    showQuestion - present a question of the quiz selected by the user.
-    recordAnswers - record answers completed.
-    modifyAnswers - modify answers of a quiz.
-    suspendAttempts - suspend user attempts for later submission.
-    recordAttempts - record # of attempts and update.
-    submitQuiz - submit a quiz.
+        showAllQuiz - present available quizzes to the user.
+        getQuiz - present a selected quiz by the user.
+        closePersist - close the storage.
+        checkAccess - check the accessibility of a user.
+        navigateQuestions - present all questions of the selected quiz
+                            get answers for the questions.
+        showQuestion - present a question of the quiz selected by the user.
+        recordAnswers - record answers completed and store in persist.
+        modifyAnswer - modify an answer of a question.
+        suspendAttempts - suspend user attempts for later submission.
+        recordAttempts - record current attempt in persist.
+        submitQuiz - submit a quiz.
     '''
 import os
 import sys
 import datetime
-#import persist
+from persist import Persist
 
 
-storage = {}
-selectedQuiz = None
+storage = Persist() # persist.Persist()
+selectedQuiz = None # Quiz obj selected
+quizAttempt = None # My quiz attempt
+user = None # User who attempting a quiz
 
-def showAllQuiz():
+def showAllQuiz(studentId = "brown"):
     '''
-    Show all available quizzes.
+    Show all available quizzes which are assigned to a student.
     Quizzes are retrieved from persist.
-    
+
+    Args:
+    studentId : int - student ID
+  
     Return:
         list of quizzes
     
     '''
-    global storage
-    storage["Quiz"] = []
-    return storage["Quiz"]
+    try:
+        q = storage.get_assigned_quizzes(studentId)
+        return q
+    except :
+        return("There is no quiz at all.", studentId)
+        #raise
+ #   print(q)
+#    return q
 
-def getQuiz(quizNum):
+def getQuiz(quizNum = None):
     '''
     Retrieve all available quizzes from persist.
 
@@ -80,10 +85,11 @@ def getQuiz(quizNum):
         list of quizNum Quiz
     '''
     global selectedQuiz
-    
-    qs = storage["Quiz"]
-    q = qs[quizNum]
-    selectedQuiz = q
+    if not quizNum:
+        qs = showAllQuiz()
+        qn = input("Quiz number? ")
+        q = qs[qn]
+        selectedQuiz = q
     return selectedQuiz
 
 def closePersist():
@@ -93,7 +99,8 @@ def closePersist():
     return:
         boolean value of result
     '''
-    #sotrage.close()
+    
+    storage.close()
     return True
 
 def checkAccess(studentId = "drown"):
@@ -123,6 +130,30 @@ def checkAccess(studentId = "drown"):
     return accessibility
     </code>
     """
+    global user, quizAttempt
+    ans = []
+    
+    quizId = selectedQuiz.quiz_ID# quiz Id for the quiz that the user selects.
+    user = storage.get_user(studentId)
+    #check the type of a user
+    if user.user_type == 's':
+        timeNow = datetime.datetime.now()
+        # check the time
+        if  (timeNow >= selectedQuiz.start_time and\
+           timeNow <= selectedQuiz.end_time) :
+            # check # of attempts
+            if ( len(storage.get_all_attempts_for_quiz(quizId)) >\
+                 selectedQuiz.attempts_allowed):
+                print("pass!")
+                quizAttempt = QuizAttempt(user, datetime.datetime.now(), 0, ans, False)
+                return "Accessibility check done"
+            else:
+                return "Your attempts is full."
+        else:
+            return "Time is done"
+    else:
+        return "You are not a student."
+    
     return False
 
 def navigateQuestions():
@@ -133,25 +164,31 @@ def navigateQuestions():
     all questions are answered or the user requests suspend an attempt.
     When all questions are answered, the user can submit the quiz, suspend the attempt
     , or modify previous answers.
+
+    Raise:
+        IndexError - When the user answers all questions.
     
     '''
-#    global storage
-#    i = 0
-#    sus = False
-#    while not sus:
-#        try:
-#            showQuestion(selectedQuiz, i)
-#            ans[i] = input("answer: ")
-#            i ++
-#            qNum = int(input("question number?"))
-#            if qNum:
-#                showQuestion(selectedQuiz, i)
-#                ans[i] = input("answer: ")
-#                i ++
-#        except IndexError:
-#            sus = True
+    global storage, quizAttempt
+    
+    time = datetime.datetime.now()
+    quizAttempt.start_time = time
+    
     i = 0
-    showQuestion(selectedQuiz, i)
+    sus = False #suspended? no
+    while not sus:
+        try:
+            showQuestion(selectedQuiz, i)
+            ans = input("answer: ")
+            recordAnswer(i, ans)
+            i += 1
+            qNum = int(input("question number?"))
+            if qNum:
+                showQuestion(selectedQuiz, i)
+                ans[i] = input("answer: ")
+                i += 1
+        except IndexError:
+            sus = True
 
 
 def showQuestion(quiz, queNum):
@@ -160,26 +197,32 @@ def showQuestion(quiz, queNum):
     
     Args:
         quiz : Quiz object
-        queNum : int - number for the quiz
+        queNum : int - number for the question
         
     Return:
         questions srting
     '''
     s = "ok"
+    question = quiz.questions[queNum].question # get the question str.
+    s = question
     return s
 
 
-def recordAnswers():
+def recordAnswer(queNum, ans):
     '''
-    Record answers in storage till submission.
+    Record an answer in persist till submission.
 
-    Return:
-        bollean of result of this.
+    Args:
+        queNum : int - question number.
+        ans : str - answer string.
     '''
+    global quizAttempt
     
-    return True
+    quizAttempt.answers[queNum] = ans #answer storing
+    recordAttempts()
+    
 
-def modifyAnswers(new_answer, queNum):
+def modifyAnswers(newAnswer, queNum):
     '''
     Get a new answer for the question and
     modify the previous answer.
@@ -187,61 +230,66 @@ def modifyAnswers(new_answer, queNum):
     new_answer(str) and queNum(int) by using POST method.
 
     Args:
-        new_answer : str - new answer
-        queNum : int - question #
-
-    Return:
-        boolean of result of this.
-
-    <code>
-    newAnswer = "My new anwer 1"
-    questionNumber = 0
-    self.answers[questionNumber] = newAnswer
-    </code>
+        newAnswer : str - new answer.
+        queNum : int - question #.
     '''
-    return True
+
+    global quizAttempt
+    
+    quizAttempt.answers[queNum] = newAnswer
+
 
 def suspendAttempts():
     '''
     Suspend attempt for later submission.
-    This method will change a boolean value in persist
-    so that when the user resumes the quiz,
-    # of quiz attempts won't be incremented.
+    This method will change quizAttempt.is_submitted to False.
+    When the user resumes the quiz, a new quizAttempt obj won't be added.
 
-    Return:
-        boolean of result of this.
-        
-    <code>
-    self.submit = False
-    quiz._is_submitted = self.subimt
-    </code>
     '''
-    return True
+    global quizAttempt
+    
+    quizAttempt.is_submitted = False # quizAttempt is suspended.
+    recordAttempts() # record this quizAttempt
 
 def recordAttempts():
     '''
-    Store # of attempts that a user tries in storage.
-
-    Return:
-        boolean of result of this.
+    Store quizAttempt obj in persist.
+    When the list of quizAttempt is empty,
+    append the quizAttempt ojb to the end of the list in persist.
+    When previous quizAttempt is not submitted yet,
+    change the unsubmitted quizAttempt obj to current one.
     '''
-
-    return True
+    global storage
+    
+    quizId = selectedQuiz.quiz_ID # quiz ID of selected quiz.
+    allAttempts = storage.get_all_attempts_for_quiz(quizId)
+    if (allAttempts == None): # empty
+        storage.add_quiz_attempt(quizId, user, quizAttempt)
+    else: # not enmpty
+        for i in len(allAttempts):
+            if (allAttempts[i].is_submitted == False): # not submitted
+                storage["quiz_attempts"][i] = quizAttempt # assign quizAttempt
+                break
+            else:
+                if (i == len(allAttempts) - 1): # append quizAttempt
+                    storage.add_quiz_attempt(quizId, user, quizAttempt)
+                    break
 
 def submitQuiz():
     '''
-    Submit the quiz if the quiz is complete.
-    increment the # of attempts for the quiz.
-    record all answers.
-    record attempt.
-    Store above data in Persist.
-
-
+    Submit the quiz if all the questions of the quiz have been answered.
+    Store quizAttempt object in Persist.
+    
+    
     Return:
-        boolean of result of this.
-    <code>
-    if (len(storage["answer"]) != len(selectedQuiz.questions)):
-        return False
-    </code>
+        True for successfully submit a quiz.
+
     '''
-    return True
+    global quizAttempt
+    if (len(quizAttempt.answers) != len(selectedQuiz.questions)):
+        return "Answer all the questions first!!!"
+        return False
+    else:
+        quizAttempt.is_submitted = True
+        recordAttempts()
+        return True

@@ -10,7 +10,6 @@ import os
 import sys
 import datetime
 import takeQuiz 
-#import persist
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 
@@ -26,16 +25,31 @@ app.config.update(dict(
 ))
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def check():
-    flash("Accessibility : " + str(takeQuiz.checkAccess()))
-    return redirect(url_for('question'))
+    flash("Login session : ")# + str(takeQuiz.checkAccess()))
+    # return redirect(url_for('question'))
     #return str(t.checkAccess())
+    error1 = None
+    if request.method == 'POST':
+        if not request.form['userid'].isalnum():
+            error1 = 'Invalid ID'
+        else:
+            session['logged_in'] = True
+            session['userid'] = request.form['userid']
+            flash('You were logged in!')
+            return redirect(url_for('quiz'))
+    return render_template("login.html", error = error1)
 
 @app.route('/questions')
-def question():
-    q = takeQuiz.navigateQuestions()
-    return render_template('show_entries.html', entries=q)
+def quiz():
+    q = takeQuiz.showAllQuiz(session['userid'])
+    if (type(q) == list):
+        qEntries = takeQuiz.showAllQuiz()
+    else:
+        flash(q)
+        qEntries = []
+    return render_template('show_entries.html', entries=qEntries)
 
 @app.route('/record')
 def record():
@@ -45,9 +59,9 @@ def record():
 
 @app.route('/sus')
 def sus():
-    flash("suspend : " + str(takeQuiz.suspendAttempts()))
-    return redirect(url_for('question'))
- #   return str(t.suspendAttempts())
+    flash("suspend")
+    takeQuiz.suspendAttempts()
+    return redirect(url_for('quiz'))
 
 @app.route('/modi')
 def modi():
