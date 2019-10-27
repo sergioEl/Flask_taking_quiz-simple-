@@ -4,7 +4,7 @@ This is a example package for showing distribution using pip and including a fla
 
 The package includes:
 
-Ass5_comp2005_description - description of this module.
+## Ass5_comp2005_description - description of this module.
 takeQuiz - a module for taking a quiz
 flask_takeQuiz - a flask front-end for the takeQuiz module
 templates - jinja templates folder for flask
@@ -16,7 +16,7 @@ tests - folder for the unit test examples.
         The package __init__.py files could be changed to export the modules,
         but this was not covered in class or tutorials.
 
-TO RUN THE FLASK APPLICATION:
+## TO RUN THE FLASK APPLICATION:
     with flask installed the shell commands are:
         $ pip3 --upgrade
         $ pip3 install Flask
